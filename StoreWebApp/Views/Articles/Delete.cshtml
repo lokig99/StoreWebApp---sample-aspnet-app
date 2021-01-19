@@ -28,18 +28,15 @@
                 @Html.DisplayFor(model => model.Price)
             </dd>
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ImagePath)
-            </dd>
-            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Category)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Category.ID)
+                @Html.DisplayFor(model => model.Category.Name)
             </dd>
         </dl>
+
+        @{ var imgPath = string.IsNullOrEmpty(Model.ImagePath) ? "/image/no-image.png" : Model.ImagePath;}
+        <img src=@imgPath class="img-thumbnail" />
 
         <form asp-action="Delete">
             <input type="hidden" asp-for="ID" />

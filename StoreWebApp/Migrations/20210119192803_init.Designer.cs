@@ -9,8 +9,8 @@ using StoreWebApp.Data;
 namespace StoreWebApp.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20210119185924_Init")]
-    partial class Init
+    [Migration("20210119192803_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,7 +39,7 @@ namespace StoreWebApp.Migrations
                         .HasMaxLength(100);
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("ID");
 

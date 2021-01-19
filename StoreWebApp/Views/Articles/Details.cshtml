@@ -1,8 +1,5 @@
 ﻿@model Lista12.Models.Article
 
-
-<!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -13,7 +10,16 @@
     <div>
         <h4>Article</h4>
         <hr />
+
+        @{ var imgPath = string.IsNullOrEmpty(Model.ImagePath) ? "/image/no-image.png" : Model.ImagePath;}
+        <img src=@imgPath class="img-thumbnail" />
         <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ID)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ID)
+            </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Name)
             </dt>
@@ -26,20 +32,16 @@
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Price)
             </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ImagePath)
-            </dd>
+
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Category)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Category.ID)
+                @Html.DisplayFor(model => model.Category.Name)
             </dd>
         </dl>
     </div>
+
     <div>
         <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
         <a asp-action="Index">Back to List</a>

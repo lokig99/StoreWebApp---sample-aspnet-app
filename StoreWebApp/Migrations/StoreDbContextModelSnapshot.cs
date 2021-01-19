@@ -37,7 +37,7 @@ namespace StoreWebApp.Migrations
                         .HasMaxLength(100);
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("ID");
 

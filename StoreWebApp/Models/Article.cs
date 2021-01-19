@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Lista12.Models
@@ -11,13 +12,18 @@ namespace Lista12.Models
         [Required]
         public string Name { get; set; }
 
-        [DataType(DataType.Currency)]
         [Required]
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
 
-        [Display(Name = "Image path")] public string ImagePath { get; set; }
+        [Display(Name = "Photo")] public string ImagePath { get; set; }
 
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+
+        [NotMapped]
+        public IFormFile Image { get; set; }
     }
 }

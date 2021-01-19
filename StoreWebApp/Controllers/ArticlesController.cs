@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Lista12.Models;
 using StoreWebApp.Data;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace StoreWebApp.Controllers
 {
     public class ArticlesController : Controller
     {
         private readonly StoreDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public ArticlesController(StoreDbContext context)
+        public ArticlesController(StoreDbContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _env = environment;
         }
 
         // GET: Articles
@@ -48,7 +53,7 @@ namespace StoreWebApp.Controllers
         // GET: Articles/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "ID");
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "Name");
             return View();
         }
 
@@ -57,15 +62,30 @@ namespace StoreWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Price,ImagePath,CategoryId")] Article article)
+        public async Task<IActionResult> Create([Bind("ID,Name,Price,ImagePath,CategoryId,Image")] Article article)
         {
             if (ModelState.IsValid)
             {
+                if (article.Image != null)
+                {
+                    var uploadFolder = Path.Combine(_env.WebRootPath, "upload");
+
+                    var fileName = Guid.NewGuid().ToString() + article.Image.FileName;
+                    article.ImagePath = Path.Combine("\\upload", fileName);
+
+                    var uploadPath = Path.Combine(uploadFolder, fileName);
+                    using (var stream = System.IO.File.Create(uploadPath))
+                    {
+                        await article.Image.CopyToAsync(stream);
+                    }
+                }
+
+
                 _context.Add(article);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "ID", article.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "Name", article.CategoryId);
             return View(article);
         }
 
@@ -82,7 +102,7 @@ namespace StoreWebApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "ID", article.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "Name", article.CategoryId);
             return View(article);
         }
 
@@ -91,7 +111,7 @@ namespace StoreWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Price,ImagePath,CategoryId")] Article article)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Price,CategoryId,ImagePath")] Article article)
         {
             if (id != article.ID)
             {
@@ -118,7 +138,7 @@ namespace StoreWebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "ID", article.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "Name", article.CategoryId);
             return View(article);
         }
 
