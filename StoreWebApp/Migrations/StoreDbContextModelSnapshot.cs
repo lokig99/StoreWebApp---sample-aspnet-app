@@ -14,16 +14,16 @@ namespace StoreWebApp.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
+                .HasAnnotation("ProductVersion", "3.1.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.2");
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Lista12.Models.Article", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -33,8 +33,8 @@ namespace StoreWebApp.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -51,11 +51,11 @@ namespace StoreWebApp.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("ID");
 
@@ -69,13 +69,6 @@ namespace StoreWebApp.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Lista12.Models.Category", b =>
-                {
-                    b.Navigation("Articles");
                 });
 #pragma warning restore 612, 618
         }
