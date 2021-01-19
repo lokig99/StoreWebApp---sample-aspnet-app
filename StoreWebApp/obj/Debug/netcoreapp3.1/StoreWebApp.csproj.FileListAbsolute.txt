@@ -167,3 +167,14 @@ C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Stor
 C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\StoreWebApp.dll
 C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\StoreWebApp.pdb
 C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\StoreWebApp.genruntimeconfig.cache
+C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\StoreWebApp.csprojAssemblyReference.cache
+C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Articles\Create.cshtml.g.cs
+C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Articles\Delete.cshtml.g.cs
+C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Articles\Details.cshtml.g.cs
+C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Articles\Edit.cshtml.g.cs
+C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Articles\Index.cshtml.g.cs
+C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Categories\Create.cshtml.g.cs
+C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Categories\Delete.cshtml.g.cs
+C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Categories\Details.cshtml.g.cs
+C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Categories\Edit.cshtml.g.cs
+C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Categories\Index.cshtml.g.cs
