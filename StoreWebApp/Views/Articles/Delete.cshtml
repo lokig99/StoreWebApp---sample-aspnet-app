@@ -35,7 +35,7 @@
             </dd>
         </dl>
 
-        @{ var imgPath = string.IsNullOrEmpty(Model.ImagePath) ? "/image/no-image.png" : Model.ImagePath;}
+        @{ var imgPath = string.IsNullOrEmpty(Model.ImagePath) ? "/image/no-image.png" : "/upload/" + Model.ImagePath;}
         <img src=@imgPath class="img-thumbnail" />
 
         <form asp-action="Delete">

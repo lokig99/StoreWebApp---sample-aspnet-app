@@ -11,7 +11,7 @@
         <h4>Article</h4>
         <hr />
 
-        @{ var imgPath = string.IsNullOrEmpty(Model.ImagePath) ? "/image/no-image.png" : Model.ImagePath;}
+        @{ var imgPath = string.IsNullOrEmpty(Model.ImagePath) ? "/image/no-image.png" : "/upload/" + Model.ImagePath;}
         <img src=@imgPath class="img-thumbnail" />
         <dl class="row">
             <dt class="col-sm-2">

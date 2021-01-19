@@ -71,7 +71,7 @@ namespace StoreWebApp.Controllers
                     var uploadFolder = Path.Combine(_env.WebRootPath, "upload");
 
                     var fileName = Guid.NewGuid().ToString() + article.Image.FileName;
-                    article.ImagePath = Path.Combine("\\upload", fileName);
+                    article.ImagePath = fileName;
 
                     var uploadPath = Path.Combine(uploadFolder, fileName);
                     using (var stream = System.IO.File.Create(uploadPath))
@@ -167,6 +167,15 @@ namespace StoreWebApp.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var article = await _context.Articles.FindAsync(id);
+
+            if (!string.IsNullOrEmpty(article.ImagePath))
+            {
+                var uploadFolder = Path.Combine(_env.WebRootPath, "upload");
+                var filePath = Path.Combine(uploadFolder, article.ImagePath);
+                if (System.IO.File.Exists(filePath))
+                    System.IO.File.Delete(filePath);
+            }
+
             _context.Articles.Remove(article);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
