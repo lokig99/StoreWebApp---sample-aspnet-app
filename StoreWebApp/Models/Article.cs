@@ -20,7 +20,8 @@ namespace Lista12.Models
         [Display(Name = "Photo")] public string ImagePath { get; set; }
 
         [Display(Name = "Category")]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
+
         public Category Category { get; set; }
 
         [NotMapped]

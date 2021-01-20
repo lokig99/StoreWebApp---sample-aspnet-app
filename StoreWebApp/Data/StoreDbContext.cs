@@ -19,9 +19,9 @@ namespace StoreWebApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Category>()
-                .HasMany(cat => cat.Articles)
-                .WithOne().OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<Article>()
+                .HasOne(a => a.Category)
+                .WithMany(c => c.Articles).OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
