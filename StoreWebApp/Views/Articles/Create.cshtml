@@ -34,7 +34,7 @@
                 <div class="form-group">
                     <label asp-for="Image" class="control-label"></label>
                     <div class="col-md-10">
-                        <input asp-for="Image" class="form-control custom-file-input" onchange="previewFile(event)" />
+                        <input asp-for="Image" id="imgInput" class="form-control custom-file-input" accept="image/*" onchange="validateFileType(event)" />
                         <label class="custom-file-label">choose a file...</label>
                     </div>
                     <hr />
@@ -67,6 +67,25 @@
             };
             reader.readAsDataURL(event.target.files[0]);
         };
+
+
+        function validateFileType(event) {
+            var input = document.getElementById('imgInput');
+            var output = document.getElementById('preview')
+            var fileName = input.value;
+            var idxDot = fileName.lastIndexOf('.') + 1;
+            var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+            if (extFile == 'jpg' || extFile == 'jpeg' || extFile == 'png') {
+                previewFile(event);
+            } else {
+                input.value = '';
+                output.src = '';
+                alert('Only jpg/jpeg and png files are allowed!');
+            }
+
+        };
+
+
     </script>
 
 </body>
