@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Lista12.Models.Article>
+
+
+@{
+    ViewData["Title"] = "Shop";
+}
+
+<form asp-action="Index">
+    <div class="form-group" style="width:20em">
+        <label class="control-label"> @Html.DisplayNameFor(model => model.Category)</label>
+        <select id="dropdown" class="form-control" asp-items=@ViewBag.CategoryId name="category"></select>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Filter" class="btn btn-primary" />
+    </div>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @{ var imgPath = string.IsNullOrEmpty(item.ImagePath) ? "/image/no-image.png" : "/upload/" + item.ImagePath;}
+                    <img src=@imgPath class="img-thumbnail" style="max-width:400px;height:200px" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    var temp = @ViewBag.currentCat;
+    var mySelect = document.getElementById("dropdown");
+
+    if (temp > -1) {
+        for (var i, j = 0; i = mySelect.options[j]; j++) {
+            if (i.value == temp) {
+                mySelect.selectedIndex = j;
+                break;
+            }
+        }
+    }
+    else mySelect.selectedIndex = temp;
+
+</script>

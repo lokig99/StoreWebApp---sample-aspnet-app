@@ -20,8 +20,6 @@ C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razo
 C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Categories\Details.cshtml.g.cs
 C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Categories\Edit.cshtml.g.cs
 C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Categories\Index.cshtml.g.cs
-C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
@@ -178,3 +176,4 @@ C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Stor
 C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\StoreWebApp.csproj.CopyComplete
 C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\StoreWebApp.genruntimeconfig.cache
 C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\StoreWebApp.csprojAssemblyReference.cache
+C:\Users\lokig\source\repos\StoreWebApp\StoreWebApp\obj\Debug\netcoreapp3.1\Razor\Views\Shop\Index.cshtml.g.cs
