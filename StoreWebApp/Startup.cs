@@ -27,6 +27,12 @@ namespace StoreWebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(7);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             services.AddDbContextPool<StoreDbContext>(builder =>
               builder.UseSqlServer(Configuration.GetConnectionString("StoreDB")));
         }
@@ -52,6 +58,7 @@ namespace StoreWebApp
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
