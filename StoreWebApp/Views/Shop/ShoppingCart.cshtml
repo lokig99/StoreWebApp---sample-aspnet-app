@@ -29,7 +29,7 @@
             <tr>
                 <td class="align-middle">
                     <button class="btn" type="button" name="button" 
-                            onclick="location.href='@Url.Action("DeleteItem", "Shop", new {articleID = item.Article.ID, articleName = item.Article.Name})'">
+                            onclick="location.href='@Url.Action("DeleteItem", "Shop", new {articleId = item.Article.ID})'">
                         <img src="/image/bin.svg" width="30" height="30" alt=""/>
                     </button>
                 </td>
@@ -56,7 +56,7 @@
                     <div class="quantity" style="text-align:center;vertical-align:central;">
                         <button class="btn" type="button" name="button"  
                                 onclick="location.href='@Url.Action("ItemCountUpdate", "Shop", new {
-                                                            articleID = item.Article.ID, articleName = item.Article.Name, wasAdded = true})'">
+                                                            articleId = item.Article.ID,  wasAdded = true})'">
                             <img src="/image/plus.svg" alt=""/>
                         </button>
 
@@ -64,7 +64,7 @@
 
                         <button class="btn" type="button" name="button" 
                                 onclick="location.href='@Url.Action("ItemCountUpdate", "Shop", new {
-                                                            articleID = item.Article.ID, articleName = item.Article.Name, wasAdded = false})'">
+                                                            articleId = item.Article.ID, wasAdded = false})'">
                             <img src="/image/minus.svg" alt=""/>
                         </button>
                     </div>

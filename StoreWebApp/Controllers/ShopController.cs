@@ -35,8 +35,8 @@ namespace StoreWebApp.Controllers
             ViewData["currentCat"] = selectedCategory;
 
             if (selectedCategory == -1) return View(new List<Article>());
-            var storeDbContext = _context.Articles.Where(a => a.CategoryId == selectedCategory);
-            return View(await storeDbContext.ToListAsync());
+            var articles = _context.Articles.Where(a => a.CategoryId == selectedCategory);
+            return View(await articles.ToListAsync());
         }
 
 
@@ -48,64 +48,86 @@ namespace StoreWebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult AddCart(int articleID)
+        public IActionResult AddCart(int articleId)
         {
-            if (!string.IsNullOrEmpty(Request.Cookies[CartItemsTag]))
+            var article = _context.Articles.Find(articleId);
+            
+            if (article == null)
             {
-                var items =
-                    JsonConvert.DeserializeObject<Dictionary<int, int>>(Request.Cookies[CartItemsTag]);
-                items[articleID] = items.GetValueOrDefault(articleID, 0) + 1;
-                _options.Expires = DateTime.Now.AddDays(7);
-                Response.Cookies.Append(CartItemsTag, JsonConvert.SerializeObject(items), _options);
+                return RedirectToAction(nameof(Index));
             }
-            else
+            
+            if (string.IsNullOrEmpty(Request.Cookies[CartItemsTag]))
             {
-                var tmp = new Dictionary<int, int> {[articleID] = 1};
+                var tmp = new Dictionary<int, int> {[articleId] = 1};
                 _options.Expires = DateTime.Now.AddDays(7);
                 Response.Cookies.Append(CartItemsTag, JsonConvert.SerializeObject(tmp), _options);
             }
+            else
+            {
+                var items =
+                    JsonConvert.DeserializeObject<Dictionary<int, int>>(Request.Cookies[CartItemsTag]);
+                items[articleId] = items.GetValueOrDefault(articleId, 0) + 1;
+                _options.Expires = DateTime.Now.AddDays(7);
+                Response.Cookies.Append(CartItemsTag, JsonConvert.SerializeObject(items), _options);
+            }
 
-            TempData["AddedItem"] = _context.Articles.First(a => a.ID == articleID).Name;
+            TempData["AddedItem"] = article.Name;
             TempData["ShowAlert"] = "show";
 
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult DeleteItem(int articleID, string articleName)
+        public IActionResult DeleteItem(int articleId)
         {
+            if (string.IsNullOrEmpty(Request.Cookies[CartItemsTag]))
+            {
+                return RedirectToAction(nameof(ShoppingCart));
+            }
+
             var items =
                 JsonConvert.DeserializeObject<Dictionary<int, int>>(Request.Cookies[CartItemsTag]);
 
-            TempData["RemovedItem"] = articleName;
-            TempData["RemovedCount"] = items[articleID];
+            if (!items.ContainsKey(articleId)) return RedirectToAction(nameof(ShoppingCart));
+
+            TempData["RemovedItem"] = _context.Articles.Find(articleId).Name;
+            TempData["RemovedCount"] = items[articleId];
             TempData["ShowAlert"] = "show";
 
-            items.Remove(articleID);
+            items.Remove(articleId);
             _options.Expires = DateTime.Now.AddDays(7);
             Response.Cookies.Append(CartItemsTag, JsonConvert.SerializeObject(items), _options);
+
             return RedirectToAction(nameof(ShoppingCart));
         }
 
-        public IActionResult ItemCountUpdate(int articleID, string articleName, bool wasAdded)
+        public IActionResult ItemCountUpdate(int articleId, bool wasAdded)
         {
+            if (string.IsNullOrEmpty(Request.Cookies[CartItemsTag]))
+            {
+                return RedirectToAction(nameof(ShoppingCart));
+            }
+
             var items =
                 JsonConvert.DeserializeObject<Dictionary<int, int>>(Request.Cookies[CartItemsTag]);
 
-            if (!wasAdded && items[articleID] == 1)
+            if (!items.ContainsKey(articleId)) return RedirectToAction(nameof(ShoppingCart));
+            if (!wasAdded && items[articleId] == 1)
             {
-                return RedirectToAction(nameof(DeleteItem), new {articleID, articleName});
+                return RedirectToAction(nameof(DeleteItem), new {articleId});
             }
 
-            items[articleID] += wasAdded ? 1 : -1;
+            items[articleId] += wasAdded ? 1 : -1;
             _options.Expires = DateTime.Now.AddDays(7);
             Response.Cookies.Append(CartItemsTag, JsonConvert.SerializeObject(items), _options);
+
             return RedirectToAction(nameof(ShoppingCart));
         }
 
         [HttpGet]
         public async Task<IActionResult> ShoppingCart()
         {
-            if (Request.Cookies[CartItemsTag] == null)
+            if (string.IsNullOrEmpty(Request.Cookies[CartItemsTag]))
             {
                 return View(new List<CartItem>());
             }
