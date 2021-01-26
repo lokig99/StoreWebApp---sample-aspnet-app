@@ -29,7 +29,7 @@ namespace StoreWebApp
             services.AddControllersWithViews();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromDays(7);
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });

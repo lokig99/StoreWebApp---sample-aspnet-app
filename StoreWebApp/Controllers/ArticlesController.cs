@@ -62,7 +62,8 @@ namespace StoreWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Price,ImagePath,CategoryId,Image")] Article article)
+        public async Task<IActionResult> Create([Bind("ID,Name,Price,ImagePath,CategoryId,Image")]
+            Article article)
         {
             if (ModelState.IsValid)
             {
@@ -70,14 +71,12 @@ namespace StoreWebApp.Controllers
                 {
                     var uploadFolder = Path.Combine(_env.WebRootPath, "upload");
 
-                    var fileName = Guid.NewGuid().ToString() + article.Image.FileName;
+                    var fileName = Guid.NewGuid() + article.Image.FileName;
                     article.ImagePath = fileName;
 
                     var uploadPath = Path.Combine(uploadFolder, fileName);
-                    using (var stream = System.IO.File.Create(uploadPath))
-                    {
-                        await article.Image.CopyToAsync(stream);
-                    }
+                    await using var stream = System.IO.File.Create(uploadPath);
+                    await article.Image.CopyToAsync(stream);
                 }
 
 
@@ -85,6 +84,7 @@ namespace StoreWebApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "Name", article.CategoryId);
             return View(article);
         }
@@ -102,6 +102,7 @@ namespace StoreWebApp.Controllers
             {
                 return NotFound();
             }
+
             ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "Name", article.CategoryId);
             return View(article);
         }
@@ -111,7 +112,8 @@ namespace StoreWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Price,CategoryId,ImagePath")] Article article)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Price,CategoryId,ImagePath")]
+            Article article)
         {
             if (id != article.ID)
             {
@@ -131,13 +133,13 @@ namespace StoreWebApp.Controllers
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+                    
+                    throw;
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "Name", article.CategoryId);
             return View(article);
         }

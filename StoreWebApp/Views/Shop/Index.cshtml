@@ -8,58 +8,70 @@
 <form asp-action="Index">
     <div class="form-group" style="width:20em">
         <label class="control-label"> @Html.DisplayNameFor(model => model.Category)</label>
-        <select id="dropdown" class="form-control" asp-items=@ViewBag.CategoryId name="category"></select>
+        <div class="flex">
+            <select id="dropdown" class="form-control" asp-items="@ViewBag.CategoryId" name="category"></select>
+            <input type="submit" value="Filter" class="btn btn-primary"/>
+        </div>
     </div>
-    <div class="form-group">
-        <input type="submit" value="Filter" class="btn btn-primary" />
-    </div>
+
 </form>
+
+<div class="alert alert-success alert-dismissible fade @ViewBag.ShowAlert"  id="alert">
+    <strong>@ViewBag.AddedItem</strong> added to shopping cart!
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 
 
 <table class="table">
     <thead>
-        <tr>
-            <th></th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </th>
-        </tr>
+    <tr>
+        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("AddCart", "Shop", new { articleID = item.ID })'">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                        </svg>
-                    </button>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.Name)
-                </td>
-                <td>
-                    @{ var imgPath = string.IsNullOrEmpty(item.ImagePath) ? "/image/no-image.png" : "/upload/" + item.ImagePath;}
-                    <img src=@imgPath class="img-thumbnail" style="max-width:400px;height:200px" />
-                </td>
-            </tr>
-        }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("AddCart", "Shop", new {articleID = item.ID})'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </svg>
+                </button>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                <div class="img-parent">
+                    <div class="img-child">
+                        @{ var imgPath = string.IsNullOrEmpty(item.ImagePath) ? "/image/no-image.png" : "/upload/" + item.ImagePath; }
+                        <img src=@imgPath alt=""/>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
 
@@ -78,3 +90,30 @@
     else mySelect.selectedIndex = temp;
 
 </script>
+
+<style>
+    .flex {
+        display: flex;
+    }
+
+    #dropdown {
+        margin-right: 10px;
+    }
+    
+    .img-parent {
+        width:200px!important;
+        height:200px!important;
+        overflow:hidden;
+        display: table;
+    }
+    
+    .img-child {
+        display: table-cell; 
+        vertical-align: middle;
+    }
+    
+    .img-child > img {
+        max-width: 200px;
+        height: auto;
+    }
+</style>

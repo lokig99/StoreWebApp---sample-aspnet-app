@@ -56,13 +56,11 @@ namespace StoreWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Name")] Category category)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(category);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(category);
+            if (!ModelState.IsValid) return View(category);
+
+            _context.Add(category);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Categories/Edit/5
@@ -78,6 +76,7 @@ namespace StoreWebApp.Controllers
             {
                 return NotFound();
             }
+
             return View(category);
         }
 
@@ -93,27 +92,23 @@ namespace StoreWebApp.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(category);
+            try
             {
-                try
-                {
-                    _context.Update(category);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CategoryExists(category.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _context.Update(category);
+                await _context.SaveChangesAsync();
             }
-            return View(category);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CategoryExists(category.ID))
+                {
+                    return NotFound();
+                }
+
+                throw;
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Categories/Delete/5
