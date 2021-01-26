@@ -16,13 +16,15 @@
 
 </form>
 
-<div class="alert alert-success alert-dismissible fade @ViewBag.ShowAlert"  id="alert">
-    <strong>@ViewBag.AddedItem</strong> added to shopping cart!
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-
+@if (ViewBag.ShowAlert)
+{
+    <div class="alert alert-success alert-dismissible fade show" id="alert">
+        <strong>@ViewBag.AddedItem</strong> added to shopping cart!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
 
 <table class="table">
     <thead>

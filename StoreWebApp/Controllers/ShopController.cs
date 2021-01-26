@@ -28,7 +28,7 @@ namespace StoreWebApp.Controllers
         public async Task<IActionResult> Index()
         {
             ViewData["AddedItem"] = TempData["AddedItem"];
-            ViewData["ShowAlert"] = TempData["ShowAlert"];
+            ViewData["ShowAlert"] = TempData["ShowAlert"] ?? false;
             ViewData["CategoryId"] = new SelectList(_context.Categories, "ID", "Name");
 
             var selectedCategory = TempData.Peek("selectedCat") as int? ?? -1;
@@ -51,12 +51,12 @@ namespace StoreWebApp.Controllers
         public IActionResult AddCart(int articleId)
         {
             var article = _context.Articles.Find(articleId);
-            
+
             if (article == null)
             {
                 return RedirectToAction(nameof(Index));
             }
-            
+
             if (string.IsNullOrEmpty(Request.Cookies[CartItemsTag]))
             {
                 var tmp = new Dictionary<int, int> {[articleId] = 1};
@@ -73,7 +73,7 @@ namespace StoreWebApp.Controllers
             }
 
             TempData["AddedItem"] = article.Name;
-            TempData["ShowAlert"] = "show";
+            TempData["ShowAlert"] = true;
 
             return RedirectToAction(nameof(Index));
         }
@@ -92,7 +92,7 @@ namespace StoreWebApp.Controllers
 
             TempData["RemovedItem"] = _context.Articles.Find(articleId).Name;
             TempData["RemovedCount"] = items[articleId];
-            TempData["ShowAlert"] = "show";
+            TempData["ShowAlert"] = true;
 
             items.Remove(articleId);
             _options.Expires = DateTime.Now.AddDays(7);
@@ -134,7 +134,7 @@ namespace StoreWebApp.Controllers
 
             ViewBag.RemovedItem = TempData["RemovedItem"];
             ViewBag.RemovedCount = TempData["RemovedCount"];
-            ViewBag.ShowAlert = TempData["ShowAlert"];
+            ViewBag.ShowAlert = TempData["ShowAlert"] ?? false;
 
             var items =
                 JsonConvert.DeserializeObject<Dictionary<int, int>>(Request.Cookies[CartItemsTag]);

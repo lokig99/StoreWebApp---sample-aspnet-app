@@ -7,15 +7,18 @@
 
 @if (Model.Any())
 {
-    <div class="alert alert-danger alert-dismissible fade @ViewBag.ShowAlert" id="alert">
-        <strong>
-            @ViewBag.RemovedItem <span>(x</span>@ViewBag.RemovedCount)
-        </strong> removed from shopping cart!
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-
+    @if (ViewBag.ShowAlert)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" id="alert">
+            <strong>
+                @ViewBag.RemovedItem <span>(x</span>@ViewBag.RemovedCount)
+            </strong> removed from shopping cart!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    
     <table class="table align-middle" id="cart">
         <thead>
         <tr>
@@ -28,7 +31,7 @@
         {
             <tr>
                 <td class="align-middle">
-                    <button class="btn" type="button" name="button" 
+                    <button class="btn" type="button" name="button"
                             onclick="location.href='@Url.Action("DeleteItem", "Shop", new {articleId = item.Article.ID})'">
                         <img src="/image/bin.svg" width="30" height="30" alt=""/>
                     </button>
@@ -54,17 +57,15 @@
                 </td>
                 <td class="align-middle">
                     <div class="quantity" style="text-align:center;vertical-align:central;">
-                        <button class="btn" type="button" name="button"  
-                                onclick="location.href='@Url.Action("ItemCountUpdate", "Shop", new {
-                                                            articleId = item.Article.ID,  wasAdded = true})'">
+                        <button class="btn" type="button" name="button"
+                                onclick="location.href='@Url.Action("ItemCountUpdate", "Shop", new {articleId = item.Article.ID, wasAdded = true})'">
                             <img src="/image/plus.svg" alt=""/>
                         </button>
 
                         <span style="font-size:large">@Html.DisplayFor(modelItem => item.Count)</span>
 
-                        <button class="btn" type="button" name="button" 
-                                onclick="location.href='@Url.Action("ItemCountUpdate", "Shop", new {
-                                                            articleId = item.Article.ID, wasAdded = false})'">
+                        <button class="btn" type="button" name="button"
+                                onclick="location.href='@Url.Action("ItemCountUpdate", "Shop", new {articleId = item.Article.ID, wasAdded = false})'">
                             <img src="/image/minus.svg" alt=""/>
                         </button>
                     </div>
