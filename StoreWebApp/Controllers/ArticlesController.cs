@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Lista12.Models;
 using StoreWebApp.Data;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using System.IO;
 
 namespace StoreWebApp.Controllers
@@ -62,7 +61,7 @@ namespace StoreWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Price,ImagePath,CategoryId,Image")]
+        public async Task<IActionResult> Create([Bind("ID,Name,Price,CategoryId,Image")]
             Article article)
         {
             if (ModelState.IsValid)
@@ -133,7 +132,7 @@ namespace StoreWebApp.Controllers
                     {
                         return NotFound();
                     }
-                    
+
                     throw;
                 }
 
